@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -55,8 +55,11 @@ public partial class DownloadMultipleSetupViewModel(
     [RelayCommand]
     private async Task CopyTitleAsync()
     {
-        if (Application.Current?.ApplicationLifetime?.TryGetTopLevel()?.Clipboard is { } clipboard)
+        var clipboard = Application.Current?.ApplicationLifetime?.TryGetTopLevel()?.Clipboard;
+        if (clipboard is not null)
+        {
             await clipboard.SetTextAsync(Title);
+        }
     }
 
     private bool CanConfirm() => SelectedVideos.Any();
